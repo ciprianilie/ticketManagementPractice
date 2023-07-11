@@ -7,7 +7,7 @@ namespace TMS.Api.Profiles
     {
         public EventTypeProfile()
         {
-            CreateMap<EventType, Models.EventTypeDto>();
+            CreateMap<EventType, Models.EventTypeDto>().ReverseMap();
         }
     }
 }

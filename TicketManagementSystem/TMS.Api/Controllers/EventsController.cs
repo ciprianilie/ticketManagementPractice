@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using TMS.Api.Models;
 using TMS.Api.Repositories;
@@ -19,14 +20,12 @@ namespace TMS.Api.Controllers
             _eventTypeRepository = eventTypeRepository ?? throw new ArgumentNullException(nameof(eventTypeRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
         }
-
         [HttpGet(Name = "GetAllEvents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<EventDto>>> GetEvents()
         {
             var events = await _eventRepository.GetAllAsync();
-
             // TODO: Populate Venue and Event Type
 
             return Ok(_mapper.Map<IEnumerable<EventDto>>(events));
@@ -48,6 +47,49 @@ namespace TMS.Api.Controllers
             // TODO: Populate Venue and Event Type
 
             return Ok(_mapper.Map<EventDto>(eventDetails));
+        }
+
+        [HttpPatch("{id}", Name = "PartiallyUpdateEvent")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult<EventDto>> PartiallyUpdateEvent(
+            int id,
+            JsonPatchDocument<EventDto> eventPatch)
+        {
+            var eventEntity = await _eventRepository.GetByIdAsync(id);
+            if (eventEntity == null)
+            {
+                return NotFound();
+            }
+
+            var eventDto = _mapper.Map<EventDto>(eventEntity);
+            eventPatch.ApplyTo(eventDto);
+
+            if (!TryValidateModel(eventDto))
+            {
+                return BadRequest(ModelState);
+            }
+            _mapper.Map(eventDto, eventEntity);
+
+            await _eventRepository.UpdateAsync(eventEntity);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}", Name = "DeleteEventById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> DeleteEventById(int id)
+        {
+            var eventDetails = await _eventRepository.GetByIdAsync(id);
+
+            if (eventDetails == null)
+            {
+                return NotFound();
+            }
+            await _eventRepository.DeleteAsync(eventDetails);
+            return NoContent();
         }
     }
 }
