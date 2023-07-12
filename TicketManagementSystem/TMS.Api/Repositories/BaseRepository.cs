@@ -34,6 +34,11 @@ namespace TMS.Api.Repositories
             return await _dbContext.Set<T>().ToListAsync();
         }
 
+        public DbSet<T> GetAll()
+        {
+            return  _dbContext.Set<T>();
+        }
+
         public async Task UpdateAsync(T entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
