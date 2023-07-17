@@ -15,16 +15,16 @@ namespace TMS.Api.Entities
 
         public int NumberOfTickets { get; set; }
         
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderedAt { get; set; }
         
         [ForeignKey("TicketCategoryId")]
         public int TicketCategoryId { get; set; }
 
         public TicketCategory TicketCategory { get; set; }
 
-        [ForeignKey("EventId")]
-        public int EventId { get; set; }
+        [ForeignKey("CustomerId")]
+        public int CustomerId { get; set; }
 
-        public Event Event { get; set; }
+        public Customer Customer { get; set; }
     }
 }

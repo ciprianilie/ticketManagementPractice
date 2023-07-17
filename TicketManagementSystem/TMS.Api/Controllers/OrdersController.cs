@@ -16,14 +16,23 @@ namespace TMS.Api.Controllers
         private readonly IEventRepository _eventRepository;
         private readonly IEventTypeRepository _eventTypeRepository;
         private readonly IVenueRepository _venueRepository;
+        private readonly ICustomerRepository _customerRepository;
 
-        public OrdersController(IOrderRepository orderRepository, ITicketCategoryRepository ticketCategoryRepository, IEventRepository eventRepository, IVenueRepository venueRepository, IEventTypeRepository eventTypeRepository, IMapper mapper)
+        public OrdersController(
+            IOrderRepository orderRepository, 
+            ITicketCategoryRepository ticketCategoryRepository, 
+            IEventRepository eventRepository, 
+            IVenueRepository venueRepository, 
+            IEventTypeRepository eventTypeRepository,
+            ICustomerRepository customerRepository, 
+            IMapper mapper)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _ticketCategoryRepository = ticketCategoryRepository ?? throw new ArgumentNullException(nameof(ticketCategoryRepository));
             _eventRepository = eventRepository?? throw new ArgumentNullException(nameof(eventRepository));
             _venueRepository = venueRepository ?? throw new ArgumentNullException(nameof(venueRepository));
             _eventTypeRepository = eventTypeRepository ?? throw new ArgumentNullException(nameof(eventTypeRepository));
+            _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
 
             _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
         }
@@ -38,6 +47,7 @@ namespace TMS.Api.Controllers
             await _eventRepository.GetAllAsync();
             await _venueRepository.GetAllAsync();
             await _eventTypeRepository.GetAllAsync();
+            await _customerRepository.GetAllAsync();
 
             return Ok(_mapper.Map<IEnumerable<OrderDto>>(orders));
         }
@@ -52,6 +62,7 @@ namespace TMS.Api.Controllers
             await _eventRepository.GetAllAsync();
             await _eventTypeRepository.GetAllAsync();
             await _venueRepository.GetAllAsync();
+            await _customerRepository.GetAllAsync();
 
             var ticketCategoryEntity = await _ticketCategoryRepository.GetByIdAsync(orderPatch.TicketCategoryId);
 

@@ -10,7 +10,7 @@ namespace TMS.Api.Models
 
         public int NumberOfTickets { get; set; }
 
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderedAt { get; set; }
 
         public int TicketCategoryId { get; set; }
 

@@ -6,11 +6,13 @@ namespace TMS.Api.DbContext
 {
     public class TicketManagementDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public DbSet<Event> Events { get; set; } = null!;
-        public DbSet<EventType> EventTypes { get; set; } = null!;
+        public DbSet<Event> Event { get; set; } = null!;
+        public DbSet<EventType> EventType { get; set; } = null!;
         public DbSet<Venue> Venue { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
-        public DbSet<TicketCategory> TicketCategories { get; set; } = null!;
+        public DbSet<TicketCategory> TicketCategory { get; set; } = null!;
+        public DbSet<Customer> Customer { get; set; } = null!;
+
 
         public TicketManagementDbContext(DbContextOptions<TicketManagementDbContext> options)
             : base(options)
@@ -96,7 +98,9 @@ namespace TMS.Api.DbContext
 
             modelBuilder.Entity<TicketCategory>().HasData(new TicketCategory { TicketCategoryId = 1, Description = "Regular", EventId = 1, Price=10m });
             modelBuilder.Entity<TicketCategory>().HasData(new TicketCategory { TicketCategoryId = 2, Description = "VIP", EventId = 1, Price = 20m });
-            
+
+            modelBuilder.Entity<Customer>().HasData(new Customer { CustomerId = 1, CustomerName = "John Doe", Email="test@test.com"});
+
             base.OnModelCreating(modelBuilder);
         }
     }

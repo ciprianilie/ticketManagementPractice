@@ -11,21 +11,6 @@ namespace TMS.Api.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Orders_Customer_CustomerId",
-                table: "Orders");
-
-            migrationBuilder.DropTable(
-                name: "Customer");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders");
-
-            migrationBuilder.DropColumn(
-                name: "CustomerId",
-                table: "Orders");
-
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
@@ -86,27 +71,6 @@ namespace TMS.Api.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "CustomerId",
-                table: "Orders",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.CustomerId);
-                });
-
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
@@ -162,19 +126,6 @@ namespace TMS.Api.Migrations
                 keyValue: 2,
                 column: "Price",
                 value: 0m);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
-                table: "Orders",
-                column: "CustomerId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Orders_Customer_CustomerId",
-                table: "Orders",
-                column: "CustomerId",
-                principalTable: "Customer",
-                principalColumn: "CustomerId",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

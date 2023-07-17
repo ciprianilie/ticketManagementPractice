@@ -11,6 +11,7 @@ namespace TMS.Api.Models
         public string EventDescription { get; set; }
 
         public EventType? EventType { get; set; }
+
         public Venue? Venue { get; set; }
 
         public DateTime StartDate { get; set; }
