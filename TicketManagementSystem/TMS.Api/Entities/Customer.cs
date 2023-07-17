@@ -3,16 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TMS.Api.Entities
 {
-    public class Venue
+    public class Customer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int VenueId { get; set; }
-
-        public string Location { get; set; }
+        public int CustomerId { get; set; }
         
-        public string? Type { get; set; } //?
+        [Required]
+        [MaxLength(50)]
+        public string CustomerName { get; set; }
         
-        public int Capacity { get; set; }
+        [Required]
+        public string Email { get; set; }
     }
 }

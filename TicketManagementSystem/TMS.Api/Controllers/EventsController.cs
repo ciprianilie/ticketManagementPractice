@@ -20,6 +20,7 @@ namespace TMS.Api.Controllers
             _eventTypeRepository = eventTypeRepository ?? throw new ArgumentNullException(nameof(eventTypeRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
         }
+
         [HttpGet(Name = "GetAllEvents")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
@@ -49,15 +50,14 @@ namespace TMS.Api.Controllers
             return Ok(_mapper.Map<EventDto>(eventDetails));
         }
 
-        [HttpPatch("{id}", Name = "PartiallyUpdateEvent")]
+        [HttpPatch("{id}", Name = "PatchEvent")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<EventDto>> PartiallyUpdateEvent(
-            int id,
-            JsonPatchDocument<EventDto> eventPatch)
+        public async Task<ActionResult<EventDto>> PatchEvent(int id, JsonPatchDocument<EventDto> eventPatch)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(id);
+
             if (eventEntity == null)
             {
                 return NotFound();
@@ -73,7 +73,13 @@ namespace TMS.Api.Controllers
             _mapper.Map(eventDto, eventEntity);
 
             await _eventRepository.UpdateAsync(eventEntity);
-            return NoContent();
+
+            return new ContentResult()
+            {
+                Content = id.ToString(),
+                ContentType = "application/json",
+                StatusCode = StatusCodes.Status200OK
+            };
         }
 
         [HttpDelete("{id}", Name = "DeleteEventById")]
@@ -89,7 +95,13 @@ namespace TMS.Api.Controllers
                 return NotFound();
             }
             await _eventRepository.DeleteAsync(eventDetails);
-            return NoContent();
+
+            return new ContentResult()
+            {
+                Content = id.ToString(),
+                ContentType = "application/json",
+                StatusCode = StatusCodes.Status200OK
+            };
         }
     }
 }

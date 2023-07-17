@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TMS.Api.DbContext;
 
@@ -11,9 +12,11 @@ using TMS.Api.DbContext;
 namespace TMS.Api.Migrations
 {
     [DbContext(typeof(TicketManagementDbContext))]
-    partial class TicketManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230712072747_removedEventsFromEventType")]
+    partial class removedEventsFromEventType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace TMS.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("TMS.Api.Entities.Customer", b =>
-                {
-                    b.Property<int>("CustomerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
-
-                    b.Property<string>("CustomerName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CustomerId");
-
-                    b.ToTable("Customer");
-
-                    b.HasData(
-                        new
-                        {
-                            CustomerId = 1,
-                            CustomerName = "John Doe",
-                            Email = "test@test.com"
-                        });
-                });
 
             modelBuilder.Entity("TMS.Api.Entities.Event", b =>
                 {
@@ -88,67 +61,67 @@ namespace TMS.Api.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Events");
 
                     b.HasData(
                         new
                         {
                             EventId = 1,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3678),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2278),
                             EventDescription = "Join John for his farwell tour across 15 continents. John really needs no introduction since he has already mesmerized the world with his banjo.",
                             EventName = "John Egbert Live",
                             EventTypeId = 1,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3651),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2250),
                             VenueId = 1
                         },
                         new
                         {
                             EventId = 2,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3686),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2287),
                             EventDescription = "Michael Johnson doesn't need an introduction. His 25 concert across the globe last year were seen by thousands. Can we add you to the list?",
                             EventName = "The State of Affairs: Michael Live!",
                             EventTypeId = 1,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3685),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2285),
                             VenueId = 1
                         },
                         new
                         {
                             EventId = 3,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3692),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2293),
                             EventDescription = "Join John for his farwell tour across 15 continents. John really needs no introduction since he has already mesmerized the world with his banjo.",
                             EventName = "John Egbert Live",
                             EventTypeId = 1,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3691),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2292),
                             VenueId = 2
                         },
                         new
                         {
                             EventId = 4,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3698),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2298),
                             EventDescription = "DJs from all over the world will compete in this epic battle for eternal fame.",
                             EventName = "Clash of the DJs",
                             EventTypeId = 1,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3697),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2297),
                             VenueId = 1
                         },
                         new
                         {
                             EventId = 6,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3703),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2326),
                             EventDescription = "The best tech conference in the world",
                             EventName = "Techorama 2021",
                             EventTypeId = 4,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3702),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2323),
                             VenueId = 1
                         },
                         new
                         {
                             EventId = 5,
-                            EndDate = new DateTime(2024, 2, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3710),
+                            EndDate = new DateTime(2024, 2, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2334),
                             EventDescription = "The critics are over the moon and so will you after you've watched this sing and dance extravaganza written by Nick Sailor, the man from 'My dad and sister'.",
                             EventName = "To the Moon and Back",
                             EventTypeId = 2,
-                            StartDate = new DateTime(2024, 1, 17, 20, 53, 12, 32, DateTimeKind.Local).AddTicks(3709),
+                            StartDate = new DateTime(2024, 1, 12, 10, 27, 47, 369, DateTimeKind.Local).AddTicks(2333),
                             VenueId = 1
                         });
                 });
@@ -167,7 +140,7 @@ namespace TMS.Api.Migrations
 
                     b.HasKey("EventTypeId");
 
-                    b.ToTable("EventType");
+                    b.ToTable("EventTypes");
 
                     b.HasData(
                         new
@@ -200,13 +173,13 @@ namespace TMS.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<int>("NumberOfTickets")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrderedAt")
+                    b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TicketCategoryId")
@@ -218,7 +191,7 @@ namespace TMS.Api.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("EventId");
 
                     b.HasIndex("TicketCategoryId");
 
@@ -248,7 +221,7 @@ namespace TMS.Api.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("TicketCategory");
+                    b.ToTable("TicketCategories");
 
                     b.HasData(
                         new
@@ -325,9 +298,9 @@ namespace TMS.Api.Migrations
 
             modelBuilder.Entity("TMS.Api.Entities.Order", b =>
                 {
-                    b.HasOne("TMS.Api.Entities.Customer", "Customer")
+                    b.HasOne("TMS.Api.Entities.Event", "Event")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -337,7 +310,7 @@ namespace TMS.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("Event");
 
                     b.Navigation("TicketCategory");
                 });

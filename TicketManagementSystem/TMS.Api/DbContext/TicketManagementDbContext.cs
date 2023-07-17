@@ -1,19 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using TMS.Api.Entities;
 
 namespace TMS.Api.DbContext
 {
     public class TicketManagementDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public DbSet<Event> Events { get; set; } = null!;
-        public DbSet<EventType> EventTypes { get; set; } = null!;
+        public DbSet<Event> Event { get; set; } = null!;
+        public DbSet<EventType> EventType { get; set; } = null!;
         public DbSet<Venue> Venue { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<TicketCategory> TicketCategory { get; set; } = null!;
+        public DbSet<Customer> Customer { get; set; } = null!;
 
 
         public TicketManagementDbContext(DbContextOptions<TicketManagementDbContext> options)
             : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +25,7 @@ namespace TMS.Api.DbContext
             var musicalId = 2;
             var playId = 3;
             var conferenceId = 4;
+
             modelBuilder.Entity<EventType>().HasData(new EventType { EventTypeId = concertId, EventTypeName = "Concerts" });
             modelBuilder.Entity<EventType>().HasData(new EventType { EventTypeId = musicalId, EventTypeName = "Musicals" });
             modelBuilder.Entity<EventType>().HasData(new EventType { EventTypeId = playId, EventTypeName = "Plays" });
@@ -29,7 +33,6 @@ namespace TMS.Api.DbContext
 
             modelBuilder.Entity<Venue>().HasData(new Venue { VenueId = 1, Location = "Remote", Capacity = 20 });
             modelBuilder.Entity<Venue>().HasData(new Venue { VenueId = 2, Location = "Physical", Capacity = 20 });
-
 
             modelBuilder.Entity<Event>().HasData(new Event
             {
@@ -41,8 +44,6 @@ namespace TMS.Api.DbContext
                 EventTypeId = concertId,
                 VenueId = 1
             });
-
-
             modelBuilder.Entity<Event>().HasData(new Event
             {
                 EventId = 2,
@@ -53,7 +54,6 @@ namespace TMS.Api.DbContext
                 EventTypeId = concertId,
                 VenueId = 1
             });
-
             modelBuilder.Entity<Event>().HasData(new Event
             {
                 EventId = 3,
@@ -64,7 +64,6 @@ namespace TMS.Api.DbContext
                 EventTypeId = concertId,
                 VenueId = 2
             });
-
             modelBuilder.Entity<Event>().HasData(new Event
             {
                 EventId = 4,
@@ -75,7 +74,6 @@ namespace TMS.Api.DbContext
                 EventTypeId = concertId,
                 VenueId = 1
             });
-
 
             modelBuilder.Entity<Event>().HasData(new Event
             {
@@ -97,6 +95,11 @@ namespace TMS.Api.DbContext
                 EventTypeId = musicalId,
                 VenueId = 1
             });
+
+            modelBuilder.Entity<TicketCategory>().HasData(new TicketCategory { TicketCategoryId = 1, Description = "Regular", EventId = 1, Price=10m });
+            modelBuilder.Entity<TicketCategory>().HasData(new TicketCategory { TicketCategoryId = 2, Description = "VIP", EventId = 1, Price = 20m });
+
+            modelBuilder.Entity<Customer>().HasData(new Customer { CustomerId = 1, CustomerName = "John Doe", Email="test@test.com"});
 
             base.OnModelCreating(modelBuilder);
         }
