@@ -14,6 +14,6 @@ Once finished, hit the full-green arrow button (named as TMS.Api) below the uppe
 A browser tab should open with some Swagger specs that you can test.
 
 [`launchSettings.json`](https://github.com/ciprianilie/ticketManagementPractice/blob/main/TicketManagementSystem/TMS.Api/Properties/launchSettings.json) holds some startup props. 
-Under `profile` section, feel free to change any port in `applicationUrl` that is relevant to you, not blocked by any other app: `applicationUrl`: `https://localhost:**7260**;http://localhost:5264`,
+Under `profile` section, feel free to change any port in `applicationUrl` that is relevant to you, not blocked by any other app: `applicationUrl`: `https://localhost:7260;http://localhost:5264`,
 
 Feel free to call the API accordingly.
